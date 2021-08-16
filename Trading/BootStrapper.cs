@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using BotV1;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
 
@@ -27,6 +29,19 @@ namespace Trading
         {
             //throw new System.NotImplementedException();
             
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+
+            var botModule = typeof(BotV1Module);
+            var moduleInfo = new ModuleInfo() { ModuleName = botModule.Name,
+                ModuleType = botModule.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            };
+            moduleCatalog.AddModule(moduleInfo);
+
         }
     }
 }
